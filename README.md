@@ -1,66 +1,74 @@
-## Foundry
+# PyPouch
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+**PyPouch is a smart contract for simplified Aave yield accounting, enabling seamless PYUSD savings management.**
 
-Foundry consists of:
+## Overview
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+PyPouch is an on-chain smart contract designed to facilitate the management of PYUSD savings by interfacing directly with Aave. Users can seamlessly deposit and withdraw PYUSD while earning yield. The contract automates yield accounting by checkpointing balances during each user transaction (deposit, withdraw, send, receive), emitting events to log interest accrued between transactions.
 
-## Documentation
+## Features
 
-https://book.getfoundry.sh/
+- **Deposit and Withdraw**: Easily deposit PYUSD into Aave and withdraw it when needed.
+- **Event-Driven Yield Accounting**: Automatically tracks and logs interest earned between transactions.
+- **Send and Receive**: Transfer PYUSD to other users directly or via QR code.
+- **Transparent Yield Tracking**: All yield calculations are done on-chain and can be easily verified.
 
-## Usage
+## Getting Started
+
+### Prerequisites
+
+- [Foundry](https://book.getfoundry.sh/getting-started/installation.html)
+- [Node.js](https://nodejs.org/) (for running scripts)
+
+### Installation
+
+1. Clone the repository:
+   ```shell
+   git clone https://github.com/yourusername/pypouch.git
+   cd pypouch
+   ```
+
+2. Install dependencies:
+   ```shell
+   forge install
+   ```
 
 ### Build
 
+Compile the smart contracts:
+
 ```shell
-$ forge build
+forge build
 ```
 
 ### Test
 
-```shell
-$ forge test
-```
-
-### Format
+Run the test suite:
 
 ```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
+forge test
 ```
 
 ### Deploy
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
+Deploy the PyPouch contract to a network:
 
 ```shell
-$ cast <subcommand>
+forge script script/DeployPyPouch.s.sol:DeployPyPouchScript --rpc-url <your_rpc_url> --private-key <your_private_key>
 ```
 
-### Help
+## Documentation
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+For more detailed information about PyPouch, please refer to our [whitepaper](Whitepaper.pdf).
+
+## Contributing
+
+We welcome contributions to PyPouch! Please see our [Contributing Guide](CONTRIBUTING.md) for more details.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Contact
+
+For questions or support, please open an issue in this repository or contact us at support@pypouch.com.
