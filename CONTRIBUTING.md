@@ -58,9 +58,9 @@ By participating in this project, you are expected to uphold our [Code of Conduc
 
 ## Reporting Bugs
 
-1. Ensure the bug was not already reported by searching on GitHub under [Issues](https://github.com/yourusername/pypouch/issues).
+1. Ensure the bug was not already reported by searching on GitHub under [Issues](https://github.com/mikeghen/pypouch-contracts/issues).
 
-2. If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/yourusername/pypouch/issues/new). Be sure to include a title and clear description, as much relevant information as possible, and a code sample or an executable test case demonstrating the expected behavior that is not occurring.
+2. If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/mikeghen/pypouch-contracts/issues/new). Be sure to include a title and clear description, as much relevant information as possible, and a code sample or an executable test case demonstrating the expected behavior that is not occurring.
 
 ## Suggesting Enhancements
 
