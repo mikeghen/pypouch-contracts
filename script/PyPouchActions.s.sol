@@ -21,10 +21,8 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 abstract contract BaseAction is Script {
     PyPouch public pyPouch;
     IERC20 public pyusdToken;
-    uint256 private userKey;
 
     function setUp() public virtual {
-        userKey = vm.envUint("OWNER_PRIVATE_KEY");
         pyPouch = PyPouch(vm.envAddress("PY_POUCH_ADDRESS"));
         pyusdToken = IERC20(vm.envAddress("PYUSD_TOKEN_ADDRESS"));
     }
@@ -34,7 +32,7 @@ abstract contract BaseAction is Script {
 
 contract Deposit is BaseAction {
     function run() public override {
-        vm.startBroadcast(userKey);
+        vm.startBroadcast(vm.envUint("OWNER_PRIVATE_KEY"));
         uint256 amount = vm.envUint("DEPOSIT_AMOUNT");
         pyusdToken.approve(address(pyPouch), amount);
         pyPouch.deposit(amount);
@@ -45,7 +43,7 @@ contract Deposit is BaseAction {
 
 contract Withdraw is BaseAction {
     function run() public override {
-        vm.startBroadcast(userKey);
+        vm.startBroadcast(vm.envUint("OWNER_PRIVATE_KEY"));
         uint256 amount = vm.envUint("WITHDRAW_AMOUNT");
         address receiver = vm.envAddress("RECEIVER_ADDRESS");
         pyPouch.withdraw(amount, receiver);
