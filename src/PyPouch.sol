@@ -41,7 +41,7 @@ contract PyPouch is Ownable {
         aavePool.supply(address(pyusdToken), amount, address(this), 0);
 
         // Checkpoint and update balances
-        _checkpointYield(msg.sender, 0);
+        _checkpointYield(msg.sender, 0, amount);
         users[msg.sender].netDeposits += amount;
         users[msg.sender].aTokenBalanceAtLastCheckpoint = aPYUSD.balanceOf(address(this));
 
@@ -61,7 +61,7 @@ contract PyPouch is Ownable {
         pyusdToken.transfer(receiver, amount);
 
         // Checkpoint and update balances
-        _checkpointYield(msg.sender, amount);
+        _checkpointYield(msg.sender, amount, 0);
         users[msg.sender].netDeposits -= amount;
         users[msg.sender].aTokenBalanceAtLastCheckpoint = aPYUSD.balanceOf(address(this));
 
@@ -69,17 +69,19 @@ contract PyPouch is Ownable {
     }
 
     // Checkpoint yield by comparing aPYUSD balance with the user's net deposits
-    function _checkpointYield(address user, uint256 withdrawnAmount) internal {
+    function _checkpointYield(address user, uint256 withdrawnAmount, uint256 depositedAmount) internal {
         UserInfo storage userInfo = users[user];
 
         // Get the current aPYUSD balance in the contract (accrued interest included)
         uint256 currentATokenBalance = aPYUSD.balanceOf(address(this));
+        if (depositedAmount > 0) {
+            // Get the balance before the deposit was made
+            currentATokenBalance -= depositedAmount;
+        }
         
         // Calculate interest accrued since the last checkpoint
         if (currentATokenBalance + withdrawnAmount > userInfo.aTokenBalanceAtLastCheckpoint) {
             uint256 yieldEarned = currentATokenBalance + withdrawnAmount - userInfo.aTokenBalanceAtLastCheckpoint;
-
-            // Emit yield earned event
             emit YieldEarned(user, yieldEarned);
         }
 

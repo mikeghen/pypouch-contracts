@@ -202,6 +202,24 @@ contract YieldEarning is PyPouchTest {
 
         assertEq(pyPouch.getAPYUSDBalance(), 1000e18 - 1 + _yieldAmount);
     }
+
+    function testFuzz_EarnsYieldCorrectlyOnDeposits(uint256 _depositAmount, uint256 _yieldAmount) public {
+        _depositAmount = _boundToReasonableAmount(_depositAmount);
+        _yieldAmount = _boundToReasonableAmount(_yieldAmount);
+        
+        // Simulate yield earning
+        aPYUSD.mint(address(pyPouch), _yieldAmount);
+
+        // Second deposit
+        pyusdToken.mint(user1, _depositAmount);
+        vm.startPrank(user1);
+        pyusdToken.approve(address(pyPouch), _depositAmount);
+        
+        vm.expectEmit();
+        emit PyPouch.YieldEarned(user1, _yieldAmount);
+        pyPouch.deposit(_depositAmount);
+        vm.stopPrank();
+    }
 }
 
 contract GetNetDeposits is PyPouchTest {
