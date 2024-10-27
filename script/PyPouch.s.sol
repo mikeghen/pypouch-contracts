@@ -16,10 +16,8 @@ contract PyPouchScript is Script {
     function setUp() public {}
 
     function run() public {
-        vm.startBroadcast();
-
-        // Deploy the PyPouch implementation
-        PyPouch implementation = new PyPouch();
+        uint256 ownerKey = vm.envUint("OWNER_PRIVATE_KEY");
+        vm.startBroadcast(ownerKey);
 
         // Deploy the PyPouchFactory with the implementation address
         pyPouchFactory = new PyPouchFactory();
