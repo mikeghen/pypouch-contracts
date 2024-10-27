@@ -6,6 +6,17 @@
 
 PyPouch is an on-chain smart contract designed to facilitate the management of PYUSD savings by interfacing directly with Aave. Users can seamlessly deposit and withdraw PYUSD while earning yield. The contract automates yield accounting by checkpointing balances during each user transaction (deposit, withdraw, send, receive), emitting events to log interest accrued between transactions.
 
+## Deployment Addresses
+
+### Mainnet Ethereum
+
+| Contract          | Address                                    |
+|-------------------|-------------------------------------------|
+| PyPouchFactory    | [0x9e42737Bc5FCEE35bcCe8B8F277F266C01a20817](https://etherscan.io/address/0x9e42737Bc5FCEE35bcCe8B8F277F266C01a20817) |
+| PyPouch Implementation | [0xd3a3e049402D3e241d1fef3eD1D62d35E7656c4e](https://etherscan.io/address/0xd3a3e049402D3e241d1fef3eD1D62d35E7656c4e) |
+| PyPouch Instance  | [0xfe16A93Eb7b5731B15E1d660f07e498BA12d84D7](https://etherscan.io/address/0xfe16A93Eb7b5731B15E1d660f07e498BA12d84D7) |
+
+
 ## Features
 
 - **Deposit and Withdraw**: Easily deposit PYUSD into Aave and withdraw it when needed.
