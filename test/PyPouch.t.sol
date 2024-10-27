@@ -31,8 +31,12 @@ contract PyPouchTest is Test {
         // Set up aToken in MockAavePool
         aavePool.setAToken(address(pyusdToken), address(aPYUSD));
 
+        // Deploy PyPouch contract
+        pyPouch = new PyPouch();
+
+        // Initialize PyPouch contract
         vm.prank(owner);
-        pyPouch = new PyPouch(address(pyusdToken), address(aPYUSD), address(aavePool));
+        pyPouch.initialize(owner, address(pyusdToken), address(aPYUSD), address(aavePool));
 
         // Warp to a non-zero timestamp
         vm.warp(1);
@@ -75,7 +79,9 @@ contract Constructor is PyPouchTest {
         _assumeSafeAddress(_aPYUSD);
         _assumeSafeAddress(_aavePool);
 
-        PyPouch _pyPouch = new PyPouch(_pyusdToken, _aPYUSD, _aavePool);
+        // Deploy and initialize PyPouch contract
+        PyPouch _pyPouch = new PyPouch();
+        _pyPouch.initialize(owner, _pyusdToken, _aPYUSD, _aavePool);
 
         assertEq(address(_pyPouch.pyusdToken()), _pyusdToken);
         assertEq(address(_pyPouch.aPYUSD()), _aPYUSD);

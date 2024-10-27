@@ -3,12 +3,12 @@ pragma solidity ^0.8.0;
 
 import "@aave/core-v3/contracts/interfaces/IPool.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract PyPouch is Ownable {
+contract PyPouch {
+    address public owner;
     IERC20 public pyusdToken;
     IERC20 public aPYUSD;  // aToken (e.g., aPYUSD) to track interest accrual
-    IPool public immutable aavePool;
+    IPool public aavePool;
 
     struct UserInfo {
         uint256 netDeposits;  // Total amount the user has deposited (without interest)
@@ -21,7 +21,15 @@ contract PyPouch is Ownable {
     event Withdraw(address indexed user, address indexed receiver, uint256 amount);
     event YieldEarned(address indexed user, uint256 yield);
 
-    constructor(address _pyusdToken, address _aPYUSD, address _aavePool) Ownable(msg.sender) {
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Caller is not the owner");
+        _;
+    }
+
+    // Initialize the contract
+    function initialize(address _owner, address _pyusdToken, address _aPYUSD, address _aavePool) external {
+        require(owner == address(0), "Already initialized");
+        owner = _owner;
         pyusdToken = IERC20(_pyusdToken);
         aPYUSD = IERC20(_aPYUSD);
         aavePool = IPool(_aavePool);
